@@ -7,7 +7,8 @@ import { products as localProducts } from '../data/products';
 import './ProductDetailsPage.css';
 import ProductCard from '../Components/ProductCard';
 
-const BASE_URL = "http://localhost:3000";
+// const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://koranza-backend.vercel.app";
 
 /* ── Full 360° Drag-to-Rotate 3D Card ────────────────────── */
 const Tilt3DImageBox = ({ selectedImage, product }) => {
