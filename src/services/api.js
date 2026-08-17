@@ -167,10 +167,19 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 
 
+// const api = axios.create({
+//   baseURL: "https://koranza-backend.vercel.app/api",
+// });
+
+
+import axios from 'axios';
+
 const api = axios.create({
-  baseURL: "https://koranza-backend.vercel.app/api",
+    baseURL: 'https://koranza-backend.vercel.app/api', // Make sure this matches your deployed backend URL
+    withCredentials: true
 });
 
+export default api;
 
 
 
