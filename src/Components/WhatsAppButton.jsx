@@ -15,11 +15,17 @@ const WhatsAppButton = () => {
   // };
 
 
+// const handleClick = () => {
+//     const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+//     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+//   };
+
+
+
 const handleClick = () => {
     const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
-
 
 
   return (
