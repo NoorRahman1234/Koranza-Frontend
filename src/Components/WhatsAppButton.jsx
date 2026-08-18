@@ -5,7 +5,7 @@ import './WhatsAppButton.css';
 
 const WhatsAppButton = () => {
   const [showTooltip, setShowTooltip] = useState(false);
-
+// we add whatsapp number.
   const phoneNumber = '923239221076';
   const message = 'Hello! I have a question about your products.';
 
