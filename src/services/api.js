@@ -1,17 +1,145 @@
+// import axios from "axios";
 
+// // API Base URL - Use relative path for Vite proxy, or env var for production
+// const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
-import axios from 'axios';
+// // import axios from 'axios';
 
-// API Base URL - Use relative path for Vite proxy, or env var for production
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+// const api = axios.create({
+//   baseURL: "https://koranza-backend.vercel.app/api", // Make sure this matches your deployed backend URL
+//   withCredentials: true,
+// });
 
+// // export default api;
 
-// import axios from 'axios';
+// // Product API endpoints
+// export const productAPI = {
+//   // Get all products with optional filters
+//   getAll: async (filters = {}) => {
+//     const params = new URLSearchParams();
 
-const api = axios.create({
-    baseURL: 'https://koranza-backend.vercel.app/api', // Make sure this matches your deployed backend URL
-    withCredentials: true
-});
+//     if (filters.category) params.append("category", filters.category);
+//     if (filters.search) params.append("search", filters.search);
+//     if (filters.sort) params.append("sort", filters.sort);
+//     if (filters.limit) params.append("limit", filters.limit);
+
+//     const response = await api.get(`/products?${params.toString()}`);
+//     return response.data;
+//   },
+
+//   // Get single product by ID
+//   getById: async (id) => {
+//     const response = await api.get(`/products/${id}`);
+//     return response.data;
+//   },
+
+//   // Get products by category
+//   getByCategory: async (category) => {
+//     const response = await api.get(
+//       `/products/category/${encodeURIComponent(category)}`,
+//     );
+//     return response.data;
+//   },
+
+//   // Search products
+//   search: async (query) => {
+//     const response = await api.get(
+//       `/products/search?q=${encodeURIComponent(query)}`,
+//     );
+//     return response.data;
+//   },
+
+//   // Get all categories
+//   getCategories: async () => {
+//     const response = await api.get("/products/categories");
+//     return response.data;
+//   },
+
+//   // Create product
+//   create: async (productData, imageFile) => {
+//     const formData = new FormData();
+
+//     Object.keys(productData).forEach((key) => {
+//       if (productData[key] !== null && productData[key] !== undefined) {
+//         formData.append(key, productData[key]);
+//       }
+//     });
+
+//     if (imageFile) {
+//       formData.append("image", imageFile);
+//     }
+
+//     const response = await api.post("/products", formData, {
+//       headers: {
+//         "Content-Type": "multipart/form-data",
+//       },
+//     });
+
+//     return response.data;
+//   },
+
+//   // Update product
+//   update: async (id, productData, imageFile) => {
+//     const formData = new FormData();
+
+//     Object.keys(productData).forEach((key) => {
+//       if (productData[key] !== null && productData[key] !== undefined) {
+//         formData.append(key, productData[key]);
+//       }
+//     });
+
+//     if (imageFile) {
+//       formData.append("image", imageFile);
+//     }
+
+//     const response = await api.put(`/products/${id}`, formData, {
+//       headers: {
+//         "Content-Type": "multipart/form-data",
+//       },
+//     });
+
+//     return response.data;
+//   },
+
+//   // Delete product
+//   delete: async (id) => {
+//     const response = await api.delete(`/products/${id}`);
+//     return response.data;
+//   },
+
+//   // Update stock
+//   updateStock: async (id, stock) => {
+//     const response = await api.patch(`/products/${id}/stock`, { stock });
+//     return response.data;
+//   },
+// };
+
+// // Order API
+// export const orderAPI = {
+//   create: async (orderData) => {
+//     const response = await api.post("/orders", orderData);
+//     return response.data;
+//   },
+// };
+
+// // Payment API
+// export const paymentAPI = {
+//   create: async (paymentData) => {
+//     const response = await api.post("/payments", paymentData);
+//     return response.data;
+//   },
+
+//   getAll: async () => {
+//     const response = await api.get("/payments");
+//     return response.data;
+//   },
+// };
+
+// // Health check
+// export const healthCheck = async () => {
+//   const response = await api.get("/health");
+//   return response.data;
+// };
 
 // export default api;
 
@@ -20,6 +148,15 @@ const api = axios.create({
 
 
 
+import axios from "axios";
+
+// API Base URL - Use relative path for Vite proxy, or env var for production
+const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+
+const api = axios.create({
+  baseURL: "https://koranza-backend.vercel.app/api", // Make sure this matches your deployed backend URL
+  withCredentials: true,
+});
 
 // Product API endpoints
 export const productAPI = {
@@ -27,10 +164,10 @@ export const productAPI = {
   getAll: async (filters = {}) => {
     const params = new URLSearchParams();
 
-    if (filters.category) params.append('category', filters.category);
-    if (filters.search) params.append('search', filters.search);
-    if (filters.sort) params.append('sort', filters.sort);
-    if (filters.limit) params.append('limit', filters.limit);
+    if (filters.category) params.append("category", filters.category);
+    if (filters.search) params.append("search", filters.search);
+    if (filters.sort) params.append("sort", filters.sort);
+    if (filters.limit) params.append("limit", filters.limit);
 
     const response = await api.get(`/products?${params.toString()}`);
     return response.data;
@@ -45,7 +182,7 @@ export const productAPI = {
   // Get products by category
   getByCategory: async (category) => {
     const response = await api.get(
-      `/products/category/${encodeURIComponent(category)}`
+      `/products/category/${encodeURIComponent(category)}`,
     );
     return response.data;
   },
@@ -53,14 +190,14 @@ export const productAPI = {
   // Search products
   search: async (query) => {
     const response = await api.get(
-      `/products/search?q=${encodeURIComponent(query)}`
+      `/products/search?q=${encodeURIComponent(query)}`,
     );
     return response.data;
   },
 
   // Get all categories
   getCategories: async () => {
-    const response = await api.get('/products/categories');
+    const response = await api.get("/products/categories");
     return response.data;
   },
 
@@ -75,12 +212,12 @@ export const productAPI = {
     });
 
     if (imageFile) {
-      formData.append('image', imageFile);
+      formData.append("image", imageFile);
     }
 
-    const response = await api.post('/products', formData, {
+    const response = await api.post("/products", formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
     });
 
@@ -98,12 +235,12 @@ export const productAPI = {
     });
 
     if (imageFile) {
-      formData.append('image', imageFile);
+      formData.append("image", imageFile);
     }
 
     const response = await api.put(`/products/${id}`, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
     });
 
@@ -126,44 +263,27 @@ export const productAPI = {
 // Order API
 export const orderAPI = {
   create: async (orderData) => {
-    const response = await api.post('/orders', orderData);
+    const response = await api.post("/orders", orderData);
     return response.data;
   },
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Payment API
 export const paymentAPI = {
   create: async (paymentData) => {
-    const response = await api.post('/payments', paymentData);
+    const response = await api.post("/payments", paymentData);
     return response.data;
   },
 
   getAll: async () => {
-    const response = await api.get('/payments');
+    const response = await api.get("/payments");
     return response.data;
   },
 };
 
-
-
-
-
 // Health check
 export const healthCheck = async () => {
-  const response = await api.get('/health');
+  const response = await api.get("/health");
   return response.data;
 };
 
