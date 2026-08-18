@@ -6,7 +6,7 @@ import axios from 'axios';
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 
-import axios from 'axios';
+// import axios from 'axios';
 
 const api = axios.create({
     baseURL: 'https://koranza-backend.vercel.app/api', // Make sure this matches your deployed backend URL
@@ -148,4 +148,4 @@ export const healthCheck = async () => {
   return response.data;
 };
 
-export default api;
+// export default api;
