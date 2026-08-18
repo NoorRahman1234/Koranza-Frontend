@@ -9,10 +9,18 @@ const WhatsAppButton = () => {
   const phoneNumber = '923239221076';
   const message = 'Hello! I have a question about your products.';
 
-  const handleClick = () => {
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+  // const handleClick = () => {
+  //   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  //   window.open(whatsappUrl, '_blank');
+  // };
+
+
+const handleClick = () => {
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
+
+
 
   return (
     <div className="whatsapp-button-container">
