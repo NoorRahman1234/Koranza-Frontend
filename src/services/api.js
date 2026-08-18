@@ -13,7 +13,13 @@ const api = axios.create({
     withCredentials: true
 });
 
-export default api;
+// export default api;
+
+
+
+
+
+
 
 // Product API endpoints
 export const productAPI = {
@@ -125,6 +131,19 @@ export const orderAPI = {
   },
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Payment API
 export const paymentAPI = {
   create: async (paymentData) => {
@@ -148,4 +167,4 @@ export const healthCheck = async () => {
   return response.data;
 };
 
-// export default api;
+export default api;
