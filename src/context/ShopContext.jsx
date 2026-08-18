@@ -1,7 +1,260 @@
+// import React, { createContext, useState, useContext, useEffect } from 'react';
+// import { toast } from 'react-toastify';
+// import { productAPI } from '../services/api.js';
+// import { products as localProducts, categories as localCategories } from '../data/products';
+
+// const ShopContext = createContext();
+
+// // eslint-disable-next-line react-refresh/only-export-components
+// export const useShop = () => useContext(ShopContext);
+
+// export const ShopProvider = ({ children }) => {
+   
+//     const [products, setProducts] = useState([]);
+//     const [productsLoading, setProductsLoading] = useState(true);
+//     const [productsError, setProductsError] = useState(null);
+
+//     // Cart state
+//     const [cartItems, setCartItems] = useState(() => {
+//         const localData = localStorage.getItem('cartItems');
+//         return localData ? JSON.parse(localData) : [];
+//     });
+
+//     // Wishlist state
+//     const [wishlistItems, setWishlistItems] = useState(() => {
+//         const localData = localStorage.getItem('wishlistItems');
+//         return localData ? JSON.parse(localData) : [];
+//     });
+
+//     // Categories state
+//     const [categories, setCategories] = useState(localCategories);
+
+//     // Fetch products from API
+//     const fetchProducts = async (filters = {}) => {
+//         setProductsLoading(true);
+//         setProductsError(null);
+//         try {
+//             const response = await productAPI.getAll(filters);
+//             if (response.success && response.data) {
+//                 // Map backend fields to frontend expected fields
+//                 const apiProducts = response.data.map(p => ({
+//                     ...p,
+//                     img: p.image || p.img,
+//                     skinType: p.skin_type || p.skinType
+//                 }));
+
+//                 // Merge with local products to ensure design-matched content is still there
+//                 // but API products take precedence if IDs clash
+//                 setProducts(prev => {
+//                     const merged = [...apiProducts];
+//                     localProducts.forEach(local => {
+//                         if (!merged.find(p => String(p.id) === String(local.id))) {
+//                             merged.push(local);
+//                         }
+//                     });
+//                     return merged;
+//                 });
+//             }
+//         } catch (error) {
+//             console.error('Error fetching products:', error);
+//             setProductsError('Failed to load products from server');
+//         } finally {
+//             setProductsLoading(false);
+//         }
+//     };
+
+//     // Fetch categories from API
+//     const fetchCategories = async () => {
+//         try {
+//             const response = await productAPI.getCategories();
+          
+
+// if (response.success && response.data) {
+//     const apiCategories = response.data.map(cat => ({
+//         ...cat,
+//         name: cat.name || cat.category,
+//         img: cat.image || cat.img,
+//     }));
+
+//     const merged = [...apiCategories];
+
+//     localCategories.forEach(local => {
+//         const localName = local.name || local.category;
+
+//         if (!merged.find(c => (c.name || c.category) === localName)) {
+//             merged.push(local);
+//         }
+//     });
+
+//     setCategories(merged);
+// }
+
+
+//         } catch (error) {
+//             console.error('Error fetching categories:', error);
+//         }
+//     };
+
+//     // Get product by ID
+//     const getProductById = async (id) => {
+//         try {
+//             const response = await productAPI.getById(id);
+//             return response.success ? response.data : null;
+//         } catch (error) {
+//             console.error('Error fetching product:', error);
+//             return null;
+//         }
+//     };
+
+//     // Get products by category
+//     const getProductsByCategory = async (category) => {
+//         try {
+//             const response = await productAPI.getByCategory(category);
+//             return response.success ? response.data : [];
+//         } catch (error) {
+//             console.error('Error fetching products by category:', error);
+//             return [];
+//         }
+//     };
+
+//     // Search products
+//     const searchProducts = async (query) => {
+//         try {
+//             const response = await productAPI.search(query);
+//             return response.success ? response.data : [];
+//         } catch (error) {
+//             console.error('Error searching products:', error);
+//             return [];
+//         }
+//     };
+
+//     // Load products on mount
+//     useEffect(() => {
+//         fetchProducts();
+//         fetchCategories();
+//     }, []);
+
+//     // Persist cart to localStorage
+//     useEffect(() => {
+//         localStorage.setItem('cartItems', JSON.stringify(cartItems));
+//     }, [cartItems]);
+
+//     // Persist wishlist to localStorage
+//     useEffect(() => {
+//         localStorage.setItem('wishlistItems', JSON.stringify(wishlistItems));
+//     }, [wishlistItems]);
+
+//     // Cart functions
+//     const addToCart = (product) => {
+//         setCartItems((prev) => {
+//             const existing = prev.find((item) => item.id === product.id);
+//             if (existing) {
+//                 toast.info(`${product.name} quantity updated`);
+//                 return prev.map(item =>
+//                     item.id === product.id
+//                         ? { ...item, quantity: item.quantity + (product.quantity || 1) }
+//                         : item
+//                 );
+//             }
+//             toast.success(`${product.name} added to cart!`);
+//             return [...prev, { ...product, quantity: product.quantity || 1 }];
+//         });
+//     };
+
+//     const removeFromCart = (productId) => {
+//         setCartItems((prev) => prev.filter((item) => item.id !== productId));
+//         toast.error("Item removed from cart");
+//     };
+
+//     const updateQuantity = (productId, newQuantity) => {
+//         if (newQuantity < 1) return;
+//         setCartItems(prev =>
+//             prev.map(item =>
+//                 item.id === productId ? { ...item, quantity: newQuantity } : item
+//             )
+//         );
+//     };
+
+//     const clearCart = () => {
+//         setCartItems([]);
+//         toast.info("Cart cleared");
+//     };
+
+//     // Wishlist functions
+//     const addToWishlist = (product) => {
+//         setWishlistItems((prev) => {
+//             const existing = prev.find((item) => item.id === product.id);
+//             if (existing) {
+//                 toast.info("Item removed from Wishlist");
+//                 return prev.filter((item) => item.id !== product.id);
+//             }
+//             toast.success("Added to Wishlist!");
+//             return [...prev, product];
+//         });
+//     };
+
+//     const removeFromWishlist = (productId) => {
+//         setWishlistItems((prev) => prev.filter((item) => item.id !== productId));
+//         toast.error("Item removed from wishlist");
+//     };
+
+//     const isInWishlist = (productId) => {
+//         return wishlistItems.some(item => item.id === productId);
+//     };
+
+//     // Helper to parse price
+//     const parsePrice = (price) => {
+//         if (typeof price === 'number') return price;
+//         if (!price) return 0;
+//         const cleanPrice = String(price).replace(/[^0-9.]/g, '');
+//         return Number(cleanPrice) || 0;
+//     };
+
+//     const value = {
+//         // Products
+//         products,
+//         productsLoading,
+//         productsError,
+//         fetchProducts,
+//         getProductById,
+//         getProductsByCategory,
+//         searchProducts,
+//         categories,
+
+//         // Cart
+//         cartItems,
+//         addToCart,
+//         removeFromCart,
+//         updateQuantity,
+//         clearCart,
+
+//         // Wishlist
+//         wishlistItems,
+//         addToWishlist,
+//         removeFromWishlist,
+//         isInWishlist,
+
+//         // Helpers
+//         parsePrice
+//     };
+
+//     return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
+// };
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { productAPI } from '../services/api.js';
-import { products as localProducts, categories as localCategories } from '../data/products';
 
 const ShopContext = createContext();
 
@@ -9,7 +262,7 @@ const ShopContext = createContext();
 export const useShop = () => useContext(ShopContext);
 
 export const ShopProvider = ({ children }) => {
-   
+    
     const [products, setProducts] = useState([]);
     const [productsLoading, setProductsLoading] = useState(true);
     const [productsError, setProductsError] = useState(null);
@@ -26,8 +279,8 @@ export const ShopProvider = ({ children }) => {
         return localData ? JSON.parse(localData) : [];
     });
 
-    // Categories state
-    const [categories, setCategories] = useState(localCategories);
+    // Categories state (now strictly populated from your backend/admin dashboard)
+    const [categories, setCategories] = useState([]);
 
     // Fetch products from API
     const fetchProducts = async (filters = {}) => {
@@ -39,21 +292,13 @@ export const ShopProvider = ({ children }) => {
                 // Map backend fields to frontend expected fields
                 const apiProducts = response.data.map(p => ({
                     ...p,
+                    id: p._id || p.id, // Ensure ID matches MongoDB _id
                     img: p.image || p.img,
                     skinType: p.skin_type || p.skinType
                 }));
 
-                // Merge with local products to ensure design-matched content is still there
-                // but API products take precedence if IDs clash
-                setProducts(prev => {
-                    const merged = [...apiProducts];
-                    localProducts.forEach(local => {
-                        if (!merged.find(p => String(p.id) === String(local.id))) {
-                            merged.push(local);
-                        }
-                    });
-                    return merged;
-                });
+                // Set products strictly from the backend database
+                setProducts(apiProducts);
             }
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -67,29 +312,17 @@ export const ShopProvider = ({ children }) => {
     const fetchCategories = async () => {
         try {
             const response = await productAPI.getCategories();
-          
+            
+            if (response.success && response.data) {
+                const apiCategories = response.data.map(cat => ({
+                    ...cat,
+                    name: cat.name || cat.category,
+                    img: cat.image || cat.img,
+                }));
 
-if (response.success && response.data) {
-    const apiCategories = response.data.map(cat => ({
-        ...cat,
-        name: cat.name || cat.category,
-        img: cat.image || cat.img,
-    }));
-
-    const merged = [...apiCategories];
-
-    localCategories.forEach(local => {
-        const localName = local.name || local.category;
-
-        if (!merged.find(c => (c.name || c.category) === localName)) {
-            merged.push(local);
-        }
-    });
-
-    setCategories(merged);
-}
-
-
+                // Set categories strictly from the backend database
+                setCategories(apiCategories);
+            }
         } catch (error) {
             console.error('Error fetching categories:', error);
         }
@@ -128,7 +361,7 @@ if (response.success && response.data) {
         }
     };
 
-    // Load products on mount
+    // Load products and categories on mount
     useEffect(() => {
         fetchProducts();
         fetchCategories();
@@ -147,11 +380,11 @@ if (response.success && response.data) {
     // Cart functions
     const addToCart = (product) => {
         setCartItems((prev) => {
-            const existing = prev.find((item) => item.id === product.id);
+            const existing = prev.find((item) => (item._id || item.id) === (product._id || product.id));
             if (existing) {
                 toast.info(`${product.name} quantity updated`);
                 return prev.map(item =>
-                    item.id === product.id
+                    (item._id || item.id) === (product._id || product.id)
                         ? { ...item, quantity: item.quantity + (product.quantity || 1) }
                         : item
                 );
@@ -162,7 +395,7 @@ if (response.success && response.data) {
     };
 
     const removeFromCart = (productId) => {
-        setCartItems((prev) => prev.filter((item) => item.id !== productId));
+        setCartItems((prev) => prev.filter((item) => (item._id || item.id) !== productId));
         toast.error("Item removed from cart");
     };
 
@@ -170,7 +403,7 @@ if (response.success && response.data) {
         if (newQuantity < 1) return;
         setCartItems(prev =>
             prev.map(item =>
-                item.id === productId ? { ...item, quantity: newQuantity } : item
+                (item._id || item.id) === productId ? { ...item, quantity: newQuantity } : item
             )
         );
     };
@@ -183,10 +416,10 @@ if (response.success && response.data) {
     // Wishlist functions
     const addToWishlist = (product) => {
         setWishlistItems((prev) => {
-            const existing = prev.find((item) => item.id === product.id);
+            const existing = prev.find((item) => (item._id || item.id) === (product._id || product.id));
             if (existing) {
                 toast.info("Item removed from Wishlist");
-                return prev.filter((item) => item.id !== product.id);
+                return prev.filter((item) => (item._id || item.id) !== (product._id || product.id));
             }
             toast.success("Added to Wishlist!");
             return [...prev, product];
@@ -194,12 +427,12 @@ if (response.success && response.data) {
     };
 
     const removeFromWishlist = (productId) => {
-        setWishlistItems((prev) => prev.filter((item) => item.id !== productId));
+        setWishlistItems((prev) => prev.filter((item) => (item._id || item.id) !== productId));
         toast.error("Item removed from wishlist");
     };
 
     const isInWishlist = (productId) => {
-        return wishlistItems.some(item => item.id === productId);
+        return wishlistItems.some(item => (item._id || item.id) === productId);
     };
 
     // Helper to parse price
