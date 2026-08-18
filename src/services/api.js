@@ -148,4 +148,4 @@ export const healthCheck = async () => {
   return response.data;
 };
 
-// export default api;
+export default api;
