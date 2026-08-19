@@ -337,7 +337,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import AuthLayout from "./AuthLayout";
+// import AuthLayout from "./AuthLayout";
 
 const Login = ({ onSwitch, onForgot }) => {
   const navigate = useNavigate();
