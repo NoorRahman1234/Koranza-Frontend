@@ -37,122 +37,12 @@ export default function App() {
   // Check if current route is the auth page
   const isAuthPage = location.pathname === "/auth";
 
-//   return (
-//     <>
-//       <ScrollToTop />
-//       {/* Hide Navbar on /auth route */}
-//       {!isAuthPage && <Navbar />}
-//       <WhatsAppButton />
-//       <ToastContainer 
-//         position="bottom-right" 
-//         autoClose={3000}
-//         hideProgressBar={false}
-//         newestOnTop 
-//         closeOnClick 
-//         rtl={false}
-//         pauseOnFocusLoss 
-//         draggable 
-//         pauseOnHover 
-//         theme="colored" 
-//       />
-
-//       {/* Remove top padding when Navbar is hidden so content stays aligned */}
-//       <div style={{ paddingTop: isAuthPage ? '0px' : '80px' }}>
-
-//         <Routes>
-//           {/* HOME */}
-//           <Route
-//             path="/"
-//             element={
-//               <>
-//                 <Hero />
-//                 <CategorySection />
-//                 <BrandSection />
-//                 <TrendingItems />
-//                 <Testimonials />
-//                 <Newsletter />
-//                 <Footer />
-//               </>
-//             }
-//           />
-
-//           {/* ABOUT */}
-//           <Route
-//             path="/about"
-//             element={
-//               <>
-//                 <About />
-//                 <Footer />
-//               </>
-//             }
-//           />
-
-//           {/* CONTACT */}
-//           <Route
-//             path="/contact"
-//             element={
-//               <>
-//                 <ContactPage />
-//                 <Footer />
-//               </>
-//             }
-//           />
-
-//           {/* WISHLIST */}
-//           <Route
-//             path="/heart"
-//             element={
-//               <>
-//                 <Wishlist />
-//                 <Footer />
-//               </>
-//             }
-//           />
-
-//           {/* CART */}
-//           <Route
-//             path="/cart"
-//             element={
-//               <>
-//                 <Cart />
-//                 <Footer />
-//               </>
-//             }
-//           />
-
-//           {/* LOGIN / AUTH */}
-//           <Route path="/auth" element={<Auth />} />
-
-//           {/* SHOP ROUTES */}
-//           <Route path="/category/:categoryName" element={<><CategoryPage /><Footer /></>} />
-//           <Route path="/product/:productId" element={<><ProductDetailsPage /><Footer /></>} />
-//           <Route path="/articles" element={<><ArticlesPage /><Footer /></>} />
-//           <Route path="/checkout" element={<><Checkout /><Footer /></>} />
-//           <Route path="/notifications" element={<><Notifications /><Footer /></>} />
-//           <Route path="/account" element={<><AccountSettings /><Footer /></>} />
-          
-//         </Routes>
-//       </div>
-//     </>
-//   );
-// }
-
-
-
-
-
-
-
-
-return (
+  return (
     <>
       <ScrollToTop />
       {/* Hide Navbar on /auth route */}
       {!isAuthPage && <Navbar />}
-      
-      {/* Hides WhatsApp button on /auth, shows it everywhere else */}
-      {!isAuthPage && <WhatsAppButton />}
-
+      <WhatsAppButton />
       <ToastContainer 
         position="bottom-right" 
         autoClose={3000}
@@ -168,6 +58,7 @@ return (
 
       {/* Remove top padding when Navbar is hidden so content stays aligned */}
       <div style={{ paddingTop: isAuthPage ? '0px' : '80px' }}>
+
         <Routes>
           {/* HOME */}
           <Route
@@ -186,27 +77,60 @@ return (
           />
 
           {/* ABOUT */}
-          <Route path="/about" element={<><About /><Footer /></>} />
+          <Route
+            path="/about"
+            element={
+              <>
+                <About />
+                <Footer />
+              </>
+            }
+          />
 
           {/* CONTACT */}
-          <Route path="/contact" element={<><ContactPage /><Footer /></>} />
+          <Route
+            path="/contact"
+            element={
+              <>
+                <ContactPage />
+                <Footer />
+              </>
+            }
+          />
 
           {/* WISHLIST */}
-          <Route path="/heart" element={<><Wishlist /><Footer /></>} />
+          <Route
+            path="/heart"
+            element={
+              <>
+                <Wishlist />
+                <Footer />
+              </>
+            }
+          />
 
           {/* CART */}
-          <Route path="/cart" element={<><Cart /><Footer /></>} />
+          <Route
+            path="/cart"
+            element={
+              <>
+                <Cart />
+                <Footer />
+              </>
+            }
+          />
 
           {/* LOGIN / AUTH */}
           <Route path="/auth" element={<Auth />} />
 
-          {/* SHOP & OTHER ROUTES */}
+          {/* SHOP ROUTES */}
           <Route path="/category/:categoryName" element={<><CategoryPage /><Footer /></>} />
           <Route path="/product/:productId" element={<><ProductDetailsPage /><Footer /></>} />
           <Route path="/articles" element={<><ArticlesPage /><Footer /></>} />
           <Route path="/checkout" element={<><Checkout /><Footer /></>} />
           <Route path="/notifications" element={<><Notifications /><Footer /></>} />
           <Route path="/account" element={<><AccountSettings /><Footer /></>} />
+          
         </Routes>
       </div>
     </>
