@@ -29,7 +29,8 @@ const SignupPage = ({ onSwitch }) => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/signup", {
+      // const response = await axios.post("http://localhost:3000/api/auth/signup", {
+      const response = await axios.post("https://koranza-backend.vercel.app/api/auth/signup", {
         fullName: formData.fullName,
         email: formData.email,
         phone: formData.phone,
