@@ -24,10 +24,16 @@ const Login = ({ onSwitch, onForgot }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
+      // const response = await axios.post(
+      //   "http://localhost:3000/api/auth/login",
+      //   formData
+      // );
+const response = await axios.post(
+        "https://koranza-backend.vercel.app/api/auth/login",
         formData
       );
+
+
 
       console.log(response.data);
 
